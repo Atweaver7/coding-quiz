@@ -1,4 +1,4 @@
-const question = [{
+const questions = [{
 
         question: "Which one of the following is the correct way for calling the JavaScript code?",
         answers: {
@@ -65,50 +65,61 @@ const question = [{
     }
 ];
 
+
+
+
+
 var startButton = document.getElementById('start-btn')
 var nextButton = document.getElementById('next-btn')
 var questionContainerElement = document.getElementById('question-container')
 var shuffledQuestions, currentQuestionIndex
 var questionElement = document.getElementById('question')
 var answerButtonsElement = document.getElementById('answer-buttons')
+var score = "0"
 
 startButton.addEventListener('click', startGame)
 
 
 function startGame() {
-    console.log('started')
     startButton.classList.add('hide')
-    shuffledQuestions = question.sort(() => Math.random() - .5)
+    shuffledQuestions = questions.sort(() => Math.random() - .5)
     currentQuestionIndex = 0
     questionContainerElement.classList.remove('hide')
     setNextQuestion()
+
 }
 
 function setNextQuestion() {
-    resetState()
+    // resetState()
     showQuestion(shuffledQuestions[currentQuestionIndex])
 }
 
 
 
-function showQuestion(question) {
-    questionElement.innerText = question.question
-    question.answers.forEach(answer => {
+function showQuestion(randomQuestion) {
+    answerButtonsElement.classList.remove('hide')
+    questionElement.innerText = randomQuestion["question"]
+    for (const [answerKey, answerText] of Object.entries(randomQuestion["answers"])) {
+        console.log(answerKey, answerText);
         const button = document.createElement('button')
-        button.innerText = answer.text
+        button.innerText = answerText
         button.classList.add('btn')
-        if (answer.correct) {
-            button.dataset.correct = answer.correct
+        if (answerKey === randomQuestion["correctAnswer"]) {
+            button.dataset.correctAnswer = true
+        } else {
+            button.dataset.correctAnswer = false
         }
+
         button.addEventListener('click', selectAnswer)
         answerButtonsElement.appendChild(button)
+    }
 
-    })
+
 }
 
 
 function resetState() {
-    nextButton.classlist.add('hide')
+    nextButton.classList.add('hide')
     while (answerButtonsElement.firstChild) {
         (answerButtonsElement.firstChild)
     }
