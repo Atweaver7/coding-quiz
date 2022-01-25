@@ -17,6 +17,7 @@ body {
 }
 
 .container {
+    flex: auto;
     width: 800px;
     max-width: 80%;
     background-color: grey;
@@ -47,4 +48,38 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+
+
+body {
+    text-align: center;
+    padding: 70px 50px;
+    background: #0D1A29;
+    font-family: sans-serif;
+    font-weight: lighter;
+}
+
+#timer {
+    font-size: 3em;
+    font-weight: 100;
+    margin: 2px auto;
+    color: white;
+    padding: 20px;
+    width: 400px;
+    text-shadow: 0 0 20px #0eea9d;
+}
+For this I have added HTML code in JavaScript using 'innerHTML'. Now I have added his css code.
+
+#timer div {
+    display: inline-block;
+    min-width: 90px;
+}
+
+#timer div span {
+    color: #1fd681;
+    display: block;
+    font-size: .35em;
+    font-weight: 400;
 }
