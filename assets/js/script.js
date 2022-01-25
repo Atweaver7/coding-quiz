@@ -68,7 +68,7 @@ const questions = [{
 
 
 
-
+var highScoresButton = document.getElementById('high-scores')
 var startButton = document.getElementById('start-btn')
 var nextButton = document.getElementById('next-btn')
 var questionContainerElement = document.getElementById('question-container')
@@ -78,22 +78,23 @@ var answerButtonsElement = document.getElementById('answer-buttons')
 var a = "0"
 var answerKey = ""
 // timer
-const startingMinutes = 5;
+let startingMinutes = 5;
 let time = startingMinutes * 60;
-let score = 60
+let score = 0;
 const countdownEl = document.getElementById('timer');
+let highScore = []
 
 
 function updateCountdown() {
     const minutes = Math.floor(time / 60);
     let seconds = time % 60;
     
-    countdownEl.innerHTML = `${minutes}: ${seconds}`;
+    countdownEl.innerHTML = `${minutes}:${seconds.toString().padStart(2, '0')}`;
     time--;
 }
 
 startButton.addEventListener('click', startGame)
-nextButton.addEventListener('click', () => {
+answerButtonsElement.addEventListener('click', () => {
     currentQuestionIndex++
     setNextQuestion()
 })
@@ -101,6 +102,7 @@ nextButton.addEventListener('click', () => {
 
 function startGame() {
     startButton.classList.add('hide')
+    highScoresButton.classList.add('hide')
     shuffledQuestions = questions.sort(() => Math.random() - .5)
     currentQuestionIndex = 0
     questionContainerElement.classList.remove('hide')
@@ -147,6 +149,8 @@ function showQuestion(randomQuestion) {
 
 function resetState() {
     nextButton.classList.add('hide')
+    answerButtonsElement.classList.add('hide')
+    questionElement.classList.add('hide')
     while (answerButtonsElement.firstChild) {
 answerButtonsElement.removeChild
         (answerButtonsElement.firstChild)
@@ -167,18 +171,30 @@ function nextQuestion() {
 
 function selectAnswer(e) {
     // when user clicks - choose that answer
-    const selectedButton = e.target
-    const correct = selectedButton.dataset.correct
+    var selectedButton = e.target
+    console.log(selectedButton, "Hey");
+    var correct = selectedButton.dataset.correctAnswer
     setStatusclass(document.body, correct)
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusclass(button, button.dataset.correct)
     })
-    if (shuffledQuestions.length > currentQuestionIndex + 1) {
-nextButton.classList.remove('hide')
-} else {
-    startButton.innerText = 'Reset'
-    startButton.classList.remove('hide')
-} 
+    if (correct === 'true'){
+        score += 1;
+    } else {
+        time -= 10;
+    }
+    if  (shuffledQuestions.length > currentQuestionIndex + 1) {
+        nextButton.classList.remove('hide')
+    } else {
+        startButton.innerText = 'Reset'
+        startButton.classList.remove('hide')
+        window.alert('You scored a ' + score + " out of " + shuffledQuestions.length)
+        highScore.push(score)
+        window.prompt('Your score is '  + highScore + ' - Please enter your name');
+        console.log(highScore, 'hey');
+        startingMinutes = 5;
+    }
+}
 
     function setStatusclass(element, correct) {
         clearStatusclass(element)
@@ -195,7 +211,20 @@ nextButton.classList.remove('hide')
         element.classList.remove('wrong')
     }
  
-  }
+highScoresButton.addEventListener('click', hs)
+
+function hs(){
+window.prompt('see high scores?')
+for (i=0;i<highScoresButton.length;i++)
+{
+document.write(highScoresButton[i] + "<br >");
+}
+console.log(hs, 'hey')
+}
 
 
 
+for (i=0;i<highScoresButton.length;i++)
+{
+document.write(highScoresButton[i] + "<br >");
+}

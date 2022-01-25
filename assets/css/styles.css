@@ -83,3 +83,6 @@ For this I have added HTML code in JavaScript using 'innerHTML'. Now I have adde
     font-size: .35em;
     font-weight: 400;
 }
+
+.high-scores {
+    margin-right: 20%;
